@@ -5,37 +5,37 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Home" />
+            android:title="@string/home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_my_events"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="My Events" />
+            android:title="@string/my_events" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="nav_explore"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Explore" />
+            android:title="@string/explore" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="nav_profile"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Profile" />
+            android:title="@string/profile" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Settings" />
+                android:title="@string/settings" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_my_teams"
                 android:icon="@drawable/ic_menu_send"
-                android:title="My Teams" />
+                android:title="@string/my_teams" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Logout" />
+                android:title="@string/logout" />
         </menu>
     </item>
 
