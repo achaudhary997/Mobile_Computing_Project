@@ -1,0 +1,86 @@
+[33mcommit 9b07cfcdf23229fc89b57c1576a8b58b06795fb1[m[33m ([m[1;36mHEAD -> [m[1;32mUITransitions[m[33m)[m
+Author: Anubhav Chaudhary <anubhav16013@iiitd.ac.in>
+Date:   Tue Oct 2 12:50:38 2018 +0530
+
+    Login -> Homepage working
+
+[33mcommit 274b53986ffb8d12cb0b95ba01b0bd0faee0171b[m
+Author: Anubhav Chaudhary <anubhav16013@iiitd.ac.in>
+Date:   Tue Oct 2 12:36:37 2018 +0530
+
+    Updated login/registration code with checks
+
+[33mcommit 07a1477e52f8e0ba8b7c5f73adbd589899ad0d99[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: dvatsav <deepak.srivatsav@gmail.com>
+Date:   Tue Oct 2 12:22:46 2018 +0530
+
+    sign up in login page adds user to firebase
+
+[33mcommit 4313d7511b2b6a2cddb3e3ef91ef378636eb6790[m
+Author: dvatsav <deepak.srivatsav@gmail.com>
+Date:   Tue Oct 2 11:58:26 2018 +0530
+
+    updated json file
+
+[33mcommit da65af9bc2964cace245edafdbe0e6583f719176[m
+Author: dvatsav <deepak.srivatsav@gmail.com>
+Date:   Tue Oct 2 11:51:29 2018 +0530
+
+    added firebase auth to login for emails
+
+[33mcommit c932ae8053cb16fc73d1d19b2fbf3bd0f1ac34c0[m
+Author: dvatsav <deepak.srivatsav@gmail.com>
+Date:   Wed Sep 26 23:40:42 2018 +0530
+
+    Login page and activity
+
+[33mcommit b6bcab4707c839837adc761196b2d245f64a471b[m
+Merge: e5668ae 4f5edd6
+Author: Anubhav Chaudhary <anubhav16013@iiitd.ac.in>
+Date:   Tue Sep 25 11:31:28 2018 +0530
+
+    Merge branch 'UI-Branch'
+
+[33mcommit 4f5edd68023768c1f077ad00c9e9490280783188[m
+Author: Anubhav Chaudhary <anubhav16013@iiitd.ac.in>
+Date:   Mon Sep 24 22:51:25 2018 +0530
+
+    Home Page Content updated.
+    
+    Added recycler view in home page and changed the parent layout of
+    home page from constraint layout to relative layout.
+
+[33mcommit dde8cefbd095cb36bcc1fa5186ce45adf0e05a61[m
+Author: Anubhav Chaudhary <anubhav16013@iiitd.ac.in>
+Date:   Mon Sep 24 22:45:08 2018 +0530
+
+    Updated id in xml.
+    
+    Updated id in xml for various menu items.
+
+[33mcommit b2d1161f98f225abb8f6d8672a9392805a2f6631[m
+Author: Anubhav Chaudhary <anubhav16013@iiitd.ac.in>
+Date:   Mon Sep 24 22:40:00 2018 +0530
+
+    Main Activity changed to HomePage
+    
+    Fixed homepage crash. App starts with nav bar layout. Changed menu
+    names. App starts properly
+
+[33mcommit 8ec94e2853ca351e7ef18d44d67441d682c67af0[m
+Author: Anubhav Chaudhary <anubhav16013@iiitd.ac.in>
+Date:   Mon Sep 24 22:32:18 2018 +0530
+
+    Fixed NavBar Not Showing Issue
+
+[33mcommit 13a7cb58f16b6981a44d8f15a44e182b3764123d[m
+Author: Anubhav Chaudhary <anubhav16013@iiitd.ac.in>
+Date:   Mon Sep 24 22:31:00 2018 +0530
+
+    Added NavBar Activity
+
+[33mcommit e5668aeff482eff1d146c111b25fab978c80e74c[m
+Author: Anubhav Chaudhary <anubhav16013@iiitd.ac.in>
+Date:   Tue Aug 7 22:22:44 2018 +0530
+
+    Inital commit
