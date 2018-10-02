@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "786544773467",
-    "firebase_url": "https://sportsbuddy-3838a.firebaseio.com",
-    "project_id": "sportsbuddy-3838a",
-    "storage_bucket": "sportsbuddy-3838a.appspot.com"
+    "project_number": "604106018200",
+    "firebase_url": "https://sports-buddy-8a6be.firebaseio.com",
+    "project_id": "sports-buddy-8a6be",
+    "storage_bucket": "sports-buddy-8a6be.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:786544773467:android:58c2d057fa361b61",
+        "mobilesdk_app_id": "1:604106018200:android:58c2d057fa361b61",
         "android_client_info": {
           "package_name": "com.example.anubhav.mc_project"
         }
       },
       "oauth_client": [
         {
-          "client_id": "786544773467-cgjndvj8lltlcri4sg0khldc4dkcauh1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.anubhav.mc_project",
-            "certificate_hash": "ba920232b6afe1a3ca806c55b6086355c0e68ede"
-          }
-        },
-        {
-          "client_id": "786544773467-0rpasfb09mimebmfgjgvv1hl0al20mk3.apps.googleusercontent.com",
+          "client_id": "604106018200-1lglsmv86j1nkkke5j5bbqro1mfgsri3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCz-cV1-2QgsOp_ysgGkm9AJ9Radm38quM"
+          "current_key": "AIzaSyBie6OmQLBFTBKAkGl6jYQ7iabQ3AxUp6Q"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "786544773467-0rpasfb09mimebmfgjgvv1hl0al20mk3.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
