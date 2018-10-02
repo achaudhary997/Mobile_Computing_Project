@@ -1,9 +1,8 @@
-package com.example.anubhav.mc_project.datamodels;
+package com.example.anubhav.mc_project.models;
 
 import android.location.Location;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Date;
 

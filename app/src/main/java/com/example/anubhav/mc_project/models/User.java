@@ -1,17 +1,27 @@
-package com.example.anubhav.mc_project.datamodels;
+package com.example.anubhav.mc_project.models;
+
+import java.util.ArrayList;
 
 public class User {
     // We will be using Firebase User unless required otherwise.
     private String uid;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private String email;
     private String imageUri;
     private double rating;
     private String phoneNumber;
+    private ArrayList<String> interests;
     // private List<Events> // Uncomment and implement
 
     public User() {}
+
+    public User(String uid, String fullName, String email, double rating, String phoneNumber) {
+        this.uid = uid;
+        this.fullName = fullName;
+        this.email = email;
+        this.rating = rating;
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getUid() {
         return uid;
@@ -21,20 +31,12 @@ public class User {
         this.uid = uid;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -67,5 +69,13 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public ArrayList<String> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(ArrayList<String> interests) {
+        this.interests = interests;
     }
 }

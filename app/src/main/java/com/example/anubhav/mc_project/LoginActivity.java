@@ -27,31 +27,6 @@ public class LoginActivity extends AppCompatActivity{
     private EditText loginEmail, loginPassword;
     private TextView registerButton;
     private FirebaseAuth mAuth;
-    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
-    /**
-     * ^                 # start-of-string
-     *  (?=.*[0-9])       # a digit must occur at least once
-     *  (?=.*[a-z])       # a lower case letter must occur at least once
-     *  (?=.*[A-Z])       # an upper case letter must occur at least once
-     *  (?=.*[@#$%^&+=])  # a special character must occur at least once
-     *  (?=\S+$)          # no whitespace allowed in the entire string
-     *  .{8,}             # anything, at least eight places though
-     *  $                 # end-of-string
-     */
-    private static final Pattern VALID_PASSWORD_STRONG_REGEX =
-            Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
-
-    private static boolean validateEmail(String emailStr) {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
-        return matcher.find();
-    }
-
-    private static boolean validateStrongPassword(String passwordStr) {
-        Matcher matcher = VALID_PASSWORD_STRONG_REGEX.matcher(passwordStr);
-        return matcher.find();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +38,6 @@ public class LoginActivity extends AppCompatActivity{
         registerButton = findViewById(R.id.login_register_button);
 
         mAuth = FirebaseAuth.getInstance();
-
     }
 
     @Override
@@ -77,7 +51,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void startHomePageActivity() {
-        Intent homePage = new Intent(this, HomePageActivity.class);
+        Intent homePage = new Intent(this, HomeActivity.class);
         startActivity(homePage);
     }
 
@@ -85,7 +59,7 @@ public class LoginActivity extends AppCompatActivity{
         String email = loginEmail.getText().toString();
         String password = loginPassword.getText().toString();
         Log.d("login", "Email: " + email + "; password: " + password);
-        if (validateEmail(email) && validateStrongPassword(password)) {
+        if (Helper.validateEmail(email) && Helper.validateStrongPassword(password)) {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -103,23 +77,8 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     public void register(View v) {
-        String email = loginEmail.getText().toString();
-        String password = loginPassword.getText().toString();
-        if (validateEmail(email) && validateStrongPassword(password)) {
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                startHomePageActivity();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Registration not successful", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-        } else {
-            Toast.makeText(this, "Email/Password is in incorrect format.", Toast.LENGTH_SHORT).show();
-        }
+        Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(registerIntent);
     }
 
 
