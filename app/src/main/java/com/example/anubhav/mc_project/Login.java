@@ -67,7 +67,20 @@ public class Login extends AppCompatActivity{
     }
 
     private void register() {
-        ;
+        String email = loginEmail.getText().toString();
+        String password = loginPassword.getText().toString();
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            System.out.println("Successful");
+
+                        } else {
+                            Toast.makeText(Login.this, "Registration not successful", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void validate(String email, String password) {
