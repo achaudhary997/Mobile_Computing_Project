@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -97,6 +98,7 @@ public class Login extends AppCompatActivity{
     private void login() {
         String email = loginEmail.getText().toString();
         String password = loginPassword.getText().toString();
+        Log.d("login", "Email: " + email + "; password: " + password);
         if (validateEmail(email) && validateStrongPassword(password)) {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
