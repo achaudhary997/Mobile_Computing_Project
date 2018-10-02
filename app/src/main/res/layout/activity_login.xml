@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:paddingRight="24dp"
         android:paddingLeft="24dp"
-        tools:context=".Login">
+        tools:context=".LoginActivity">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -17,11 +17,11 @@
             android:layout_marginTop="160dp">
 
             <EditText
-                android:id="@+id/loginEmail"
+                android:id="@+id/login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:hint="Email"
+                android:hint="@string/login_email"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
@@ -33,25 +33,26 @@
         android:layout_marginTop="242dp">
 
         <EditText
-            android:id="@+id/loginPassword"
+            android:id="@+id/login_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Password"
+            android:hint="@string/login_password"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/login_login_button"
         android:layout_width="339dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="360dp"
         android:layout_marginBottom="211dp"
-        android:text="Login" />
+        android:text="@string/login"
+        android:onClick="login"/>
 
     <TextView
-        android:id="@+id/registerButton"
+        android:id="@+id/login_register_button"
         android:layout_width="335dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -59,7 +60,8 @@
         android:layout_marginTop="422dp"
         android:layout_marginBottom="167dp"
         android:gravity="center"
-        android:text="Sign Up"
-        android:textSize="16dip" />
+        android:text="@string/sign_up"
+        android:textSize="16sp"
+        android:onClick="register"/>
     </RelativeLayout>
 

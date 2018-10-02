@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Login extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity{
 
     private Button loginButton;
     private EditText loginEmail, loginPassword;
@@ -57,26 +57,12 @@ public class Login extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginButton = (Button)findViewById(R.id.loginButton);
-        loginEmail = (EditText)findViewById(R.id.loginEmail);
-        loginPassword = (EditText)findViewById(R.id.loginPassword);
-        registerButton = (TextView)findViewById(R.id.registerButton);
+        loginButton = findViewById(R.id.login_login_button);
+        loginEmail = findViewById(R.id.login_email);
+        loginPassword = findViewById(R.id.login_password);
+        registerButton = findViewById(R.id.login_register_button);
 
         mAuth = FirebaseAuth.getInstance();
-
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                register();
-            }
-        });
 
     }
 
@@ -91,11 +77,11 @@ public class Login extends AppCompatActivity{
     }
 
     private void startHomePageActivity() {
-        Intent homePage = new Intent(this, HomePage.class);
+        Intent homePage = new Intent(this, HomePageActivity.class);
         startActivity(homePage);
     }
 
-    private void login() {
+    public void login(View v) {
         String email = loginEmail.getText().toString();
         String password = loginPassword.getText().toString();
         Log.d("login", "Email: " + email + "; password: " + password);
@@ -105,10 +91,9 @@ public class Login extends AppCompatActivity{
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                System.out.println("Login Succsessful");
                                 startHomePageActivity();
                             } else {
-                                Toast.makeText(Login.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -117,7 +102,7 @@ public class Login extends AppCompatActivity{
         }
     }
 
-    private void register() {
+    public void register(View v) {
         String email = loginEmail.getText().toString();
         String password = loginPassword.getText().toString();
         if (validateEmail(email) && validateStrongPassword(password)) {
@@ -126,10 +111,9 @@ public class Login extends AppCompatActivity{
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                System.out.println("Successful"); // USE LOG.d for this
                                 startHomePageActivity();
                             } else {
-                                Toast.makeText(Login.this, "Registration not successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Registration not successful", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
