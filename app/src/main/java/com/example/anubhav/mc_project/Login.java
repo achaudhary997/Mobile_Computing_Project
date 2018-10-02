@@ -56,7 +56,10 @@ public class Login extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        initializeElements();
+        loginButton = (Button)findViewById(R.id.loginButton);
+        loginEmail = (EditText)findViewById(R.id.loginEmail);
+        loginPassword = (EditText)findViewById(R.id.loginPassword);
+        registerButton = (TextView)findViewById(R.id.registerButton);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -91,13 +94,6 @@ public class Login extends AppCompatActivity{
         startActivity(homePage);
     }
 
-    private void initializeElements() {
-        loginButton = (Button)findViewById(R.id.loginButton);
-        loginEmail = (EditText)findViewById(R.id.loginEmail);
-        loginPassword = (EditText)findViewById(R.id.loginPassword);
-        registerButton = (TextView)findViewById(R.id.registerButton);
-    }
-
     private void login() {
         String email = loginEmail.getText().toString();
         String password = loginPassword.getText().toString();
@@ -128,7 +124,7 @@ public class Login extends AppCompatActivity{
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                System.out.println("Successful");
+                                System.out.println("Successful"); // USE LOG.d for this
                                 startHomePageActivity();
                             } else {
                                 Toast.makeText(Login.this, "Registration not successful", Toast.LENGTH_SHORT).show();
