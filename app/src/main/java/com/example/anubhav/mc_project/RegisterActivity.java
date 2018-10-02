@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
         interests.add(in2);
         interests.add(in3);
         userProfile.setInterests(interests);
-        mDatabaseReference.child("users").child(userID).setValue(userProfile);
+        mDatabaseReference.child(Helper.userNode).child(userID).setValue(userProfile);
     }
 
     public void register(View view) {

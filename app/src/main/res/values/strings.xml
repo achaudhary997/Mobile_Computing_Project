@@ -29,6 +29,7 @@
     <string name="email_hint">EMail</string>
     <string name="full_name_hint">Full Name</string>
     <string name="password_hint">Password</string>
+    <string name="change_profile_image">Change Profile Image</string>
 
     <!-- Interests -->
     <string-array name="interests">

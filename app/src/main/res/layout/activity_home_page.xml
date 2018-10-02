@@ -11,6 +11,13 @@
     <include
         layout="@layout/app_bar_home_page"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:id="@+id/flContent"
+        android:paddingTop="@dimen/action_bar_size"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView

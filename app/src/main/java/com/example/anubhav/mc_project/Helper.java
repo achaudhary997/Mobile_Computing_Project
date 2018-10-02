@@ -1,9 +1,23 @@
 package com.example.anubhav.mc_project;
 
+import android.app.ProgressDialog;
+import android.util.Log;
+import android.widget.ImageView;
+
+import com.example.anubhav.mc_project.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Helper {
+
+    public static String userNode = "users";
+    public static String logTag = "sports_buddy_log";
 
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
