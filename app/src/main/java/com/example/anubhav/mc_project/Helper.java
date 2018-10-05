@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 public class Helper {
 
     public static String userNode = "users";
+    public static String eventNode = "events";
     public static String logTag = "sports_buddy_log";
 
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =

@@ -93,6 +93,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
 
         } else if (id == R.id.nav_my_events) {
+            fragmentClass = EventFragment.class;
 
         } else if (id == R.id.nav_explore) {
 
@@ -129,7 +130,8 @@ public class HomeActivity extends AppCompatActivity
                 setTitle(item.getTitle());
             } catch (Exception e) {
             e.printStackTrace();
-        }
+
+            }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -140,7 +142,7 @@ public class HomeActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         ProfileFragment fragment = new ProfileFragment();
-
+        //EventFragment fragment = new EventFragment();
         fragmentTransaction.add(R.id.flContent, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();

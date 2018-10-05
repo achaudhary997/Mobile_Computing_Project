@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/profile_change_image"
-        android:layout_below="@id/profile_image"
+        android:layout_below="@+id/profile_image"
         android:text="@string/change_profile_image" />
 
 

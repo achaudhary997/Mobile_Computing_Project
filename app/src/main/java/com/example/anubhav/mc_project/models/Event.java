@@ -13,40 +13,36 @@ public class Event {
     /*
      Class Attributes
      */
-    private int eventID;
+    private String eventID;
     private String eventName;
-    private Date startTime;
-    private Date endTime;
-    private boolean teamEvent;
-    private int requiredPeopleCount;
-    private int requiredTeamCount;
-    private int teamSize;
+    private String startTime;
+    private String endTime;
+    private String teamEvent;
+    private String requiredCount;
+    private String teamSize;
     private String gameType; //Friendly / Competition
-    private float prizeMoney;
+    private String prizeMoney;
+    private String creator;
     private Location location;
 
-    /*
-     Database Initialization
-     */
-    private DatabaseReference mDatabase;
 
-    public Event(int eventID, String eventName, Date startTime, Date endTime, boolean teamEvent,
-                 int requiredPeopleCount, int requiredTeamCount, int teamSize, String gameType,
-                 float prizeMoney, Location location) {
+    public Event(String eventID, String eventName, String startTime, String endTime, String teamEvent,
+                 String requiredCount, String teamSize, String gameType,
+                 String prizeMoney, String creator) {
         this.eventID = eventID;
         this.eventName = eventName;
         this.startTime = startTime;
         this.endTime = endTime;
         this.teamEvent = teamEvent;
-        this.requiredPeopleCount = requiredPeopleCount;
-        this.requiredTeamCount = requiredTeamCount;
+        this.requiredCount = requiredCount;
         this.teamSize = teamSize;
         this.gameType = gameType;
         this.prizeMoney = prizeMoney;
-        this.location = location;
+        this.creator = creator;
+        //this.location = location;
     }
 
-    public int getEventID() {
+    public String getEventID() {
         return eventID;
     }
 
@@ -54,27 +50,23 @@ public class Event {
         return eventName;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public boolean isTeamEvent() {
+    public String getTeamEvent() {
         return teamEvent;
     }
 
-    public int getRequiredPeopleCount() {
-        return requiredPeopleCount;
+    public String getRequiredCount() {
+        return requiredCount;
     }
 
-    public int getRequiredTeamCount() {
-        return requiredTeamCount;
-    }
-
-    public int getTeamSize() {
+    public String getTeamSize() {
         return teamSize;
     }
 
@@ -82,22 +74,22 @@ public class Event {
         return gameType;
     }
 
-    public float getPrizeMoney() {
+    public String getPrizeMoney() {
         return prizeMoney;
     }
 
     public Location getLocation() {
         return location;
     }
-
+/*
     public boolean changeRequiredPeople(int quantity) {
         if (requiredPeopleCount + quantity >= 0) {
             requiredPeopleCount += quantity;
-            /*
+
             mDatabase = FirebaseDatabase.getInstance().getReference();
             mDatabase.child(DB_REF_NAME).child(Integer.toString(this.eventID))
                     .child("Required People").setValue(requiredPeopleCount);
-            */
+
             return true;
         } else {
             return false;
@@ -108,14 +100,15 @@ public class Event {
         if (requiredTeamCount + quantity >= 0) {
             requiredTeamCount += quantity;
 
-            /*
+
             mDatabase = FirebaseDatabase.getInstance().getReference();
             mDatabase.child(DB_REF_NAME).child(Integer.toString(this.eventID))
                     .child("Required Teams").setValue(requiredTeamCount);
-            */
+
             return true;
         } else {
             return false;
         }
     }
+    */
 }

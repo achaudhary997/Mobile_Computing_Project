@@ -31,6 +31,21 @@
     <string name="password_hint">Password</string>
     <string name="change_profile_image">Change Profile Image</string>
 
+    <string name="event_eventname">Event Name</string>
+    <string name="event_eventstartdate">Start Date</string>
+    <string name="event_eventstarttimme">Start Time</string>
+    <string name="event_eventendtime">End Time</string>
+    <string name="event_eventenddate">End Date</string>
+    <string name="event_teamcheckbox">Team Event</string>
+    <string name="event_reqdpeople">Required People/Teams</string>
+    <string name="event_gametypecheckbox">Competition</string>
+    <string name="event_prizemoney">Prize Money</string>
+    <string name="event_addevent">Add Event</string>
+    <string name="event_teamsize">Team Size</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+
+
     <!-- Interests -->
     <string-array name="interests">
         <item>Swimming</item>
