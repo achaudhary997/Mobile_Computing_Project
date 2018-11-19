@@ -3,10 +3,11 @@ package com.example.anubhav.mc_project;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,19 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
-import com.example.anubhav.mc_project.models.EventList;
+import com.example.anubhav.mc_project.models.Event;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
 
-public class EventFragment extends Fragment implements View.OnClickListener {
+public class EventFragment extends Fragment implements View.OnClickListener{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -35,6 +43,12 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     private EditText eventName, startTime, endTime, requiredNumber, teamSize, prizeMoney, startDate, endDate;
     private CheckBox teamOrIndi, gameType;
     private int mYear, mMonth, mDay, mHour, mMinute;
+
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference mDatabaseReference;
+    private String userID;
 
     public EventFragment() {
         // Required empty public constructor
@@ -105,7 +119,6 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                 prizeMoney.setVisibility(View.GONE);
             }
         } else if (v == addEventButton) {
-            EventList eventList = EventList.get(getActivity());
 
             String game, team;
             if (gameType.isChecked()) {
@@ -115,10 +128,11 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                 team = "Team";
             } else team = "Individual";
 
-            eventList.addEvent(eventName.getText().toString(), startTime.getText().toString(),
+            addEvent(eventName.getText().toString(), startTime.getText().toString(),
                     endTime.getText().toString(), game,
                     requiredNumber.getText().toString(), teamSize.getText().toString(),
                     prizeMoney.getText().toString(), team);
+
         } else if (v == chooseStartDateButton || v == chooseEndDateButton) {
             final Calendar c = Calendar.getInstance();
             mYear = c.get(Calendar.YEAR);
@@ -162,6 +176,43 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+    public void addEvent(final String eventName, final String startTime, final String endTime, final String gameType,
+                         final String requiredNumber, final String teamSize, final String prizeMoney,
+                         final String teamOrIndi) {
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
+        userID = user.getUid();
+
+        //final String eventID = "";
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String eventID = Long.toString(dataSnapshot.child(Helper.eventNode).getChildrenCount() + 1);
+                Event event = new Event(eventID, eventName, startTime, endTime, teamOrIndi, requiredNumber,
+                        teamSize, gameType, prizeMoney, userID);
+                mDatabaseReference.child(Helper.eventNode).child(eventID).setValue(event);
+                Log.d("Firebase", "No clue 2");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("Firebase", "No clue");
+            }
+        });
+
+
+
+
+        //events.add(event);
+        //mDatabaseReference.child(Helper.eventNode).child(eventID).setValue(event);
+
+    }
+
+
 
     @Override
     public void onAttach(Context context) {

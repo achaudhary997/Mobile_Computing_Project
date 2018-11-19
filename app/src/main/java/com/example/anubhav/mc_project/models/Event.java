@@ -26,6 +26,10 @@ public class Event {
     private Location location;
 
 
+    public Event() {
+
+    }
+
     public Event(String eventID, String eventName, String startTime, String endTime, String teamEvent,
                  String requiredCount, String teamSize, String gameType,
                  String prizeMoney, String creator) {
@@ -58,6 +62,51 @@ public class Event {
         return endTime;
     }
 
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setTeamEvent(String teamEvent) {
+        this.teamEvent = teamEvent;
+    }
+
+    public void setRequiredCount(String requiredCount) {
+        this.requiredCount = requiredCount;
+    }
+
+    public void setTeamSize(String teamSize) {
+        this.teamSize = teamSize;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
+    }
+
+    public void setPrizeMoney(String prizeMoney) {
+        this.prizeMoney = prizeMoney;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public void setEventID(String eventID) {
+
+        this.eventID = eventID;
+    }
+
     public String getTeamEvent() {
         return teamEvent;
     }
@@ -81,34 +130,5 @@ public class Event {
     public Location getLocation() {
         return location;
     }
-/*
-    public boolean changeRequiredPeople(int quantity) {
-        if (requiredPeopleCount + quantity >= 0) {
-            requiredPeopleCount += quantity;
 
-            mDatabase = FirebaseDatabase.getInstance().getReference();
-            mDatabase.child(DB_REF_NAME).child(Integer.toString(this.eventID))
-                    .child("Required People").setValue(requiredPeopleCount);
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean changeRequiredTeams(int quantity) {
-        if (requiredTeamCount + quantity >= 0) {
-            requiredTeamCount += quantity;
-
-
-            mDatabase = FirebaseDatabase.getInstance().getReference();
-            mDatabase.child(DB_REF_NAME).child(Integer.toString(this.eventID))
-                    .child("Required Teams").setValue(requiredTeamCount);
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-    */
 }

@@ -8,6 +8,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProfileFragment.OnFragmentInteractionListener {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,12 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Fragment fragment = new EventListFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.flContent, fragment);
+        transaction.commit();
+
     }
 
     @Override
@@ -91,7 +101,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
+            fragmentClass = EventListFragment.class;
         } else if (id == R.id.nav_my_events) {
             fragmentClass = EventFragment.class;
 
@@ -114,24 +124,23 @@ public class HomeActivity extends AppCompatActivity
                     });
         }
 
-            try {
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                FirebaseUser currentUser = mAuth.getCurrentUser();
+        try {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("user_id", currentUser.getUid());
+            Bundle bundle = new Bundle();
+            bundle.putString("user_id", currentUser.getUid());
 
-                fragment = (Fragment) fragmentClass.newInstance();
-                fragment.setArguments(bundle);
+            fragment = (Fragment) fragmentClass.newInstance();
+            fragment.setArguments(bundle);
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).addToBackStack(null).commit();
 
-                setTitle(item.getTitle());
-            } catch (Exception e) {
+            setTitle(item.getTitle());
+        } catch (Exception e) {
             e.printStackTrace();
-
-            }
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
