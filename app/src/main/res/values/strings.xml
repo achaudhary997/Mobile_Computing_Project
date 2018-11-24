@@ -44,6 +44,8 @@
     <string name="event_teamsize">Team Size</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
+    <string name="location">Location</string>
+    <string name="show_map">Show Map</string>
 
 
     <!-- Interests -->

@@ -1,5 +1,7 @@
 package com.example.anubhav.mc_project;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -9,9 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.anubhav.mc_project.models.Event;
+import com.google.android.gms.maps.MapView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +36,8 @@ public class EventListFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabaseReference;
     private String userID;
+
+
     
     public EventListFragment() {
         
@@ -48,6 +54,7 @@ public class EventListFragment extends Fragment {
         eventRecyclerView = view.findViewById(R.id.home_page_recycler_view);
         eventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI();
+        eventRecyclerView.setAdapter(eAdapter);
         return view;
     }
 
@@ -86,12 +93,14 @@ public class EventListFragment extends Fragment {
     private class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Event event;
         private TextView eventName, eventStartTime, eventEndTime;
+        private Button showMap;
 
         public EventHolder (LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.event_list_item_home_page, parent, false));
             eventName = itemView.findViewById(R.id.eventlist_event_name);
             eventStartTime = itemView.findViewById(R.id.eventlist_start_time);
             eventEndTime = itemView.findViewById(R.id.eventlist_end_time);
+            showMap = itemView.findViewById(R.id.eventlist_show_map);
         }
 
         public void bind (Event event) {
@@ -122,8 +131,19 @@ public class EventListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(EventHolder holder, int position) {
-            Event event = eventList.get(position);
+            final Event event = eventList.get(position);
             holder.bind(event);
+            holder.showMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String latAndLong = event.getLocation().getLatitude() + "," + event.getLocation().getLongitude();
+                    Uri address = Uri.parse("geo:"+latAndLong+"?q="+latAndLong+"(Event Location)");
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, address);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    startActivity(mapIntent);
+                }
+            });
+
         }
 
         @Override

@@ -1,176 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_margin="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context=".EventFragment">
-
-    <TextView
-        android:layout_width="wrap_content"
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/event_eventname"
-        android:layout_marginTop="30dp"/>
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        >
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        tools:context=".EventFragment">
 
-        <EditText
-            android:id="@+id/event_eventname"
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="@string/event_eventname"
-            android:inputType="text"/>
-    </android.support.design.widget.TextInputLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            >
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/event_eventname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/event_eventname"
+                android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/event_eventstartdate"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/event_eventstartdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/event_eventstartdate"
+                    android:inputType="text"
+                    android:layout_marginTop="30dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:id="@+id/event_choosestartdate"
+                android:text="@string/date"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/event_eventstarttimme"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/event_eventstarttime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/event_eventstarttimme"
+                    android:inputType="text"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:id="@+id/event_choosestarttime"
+                android:text="@string/time"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/event_eventenddate"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/event_eventenddate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/event_eventenddate"
+                    android:inputType="text"
+                    android:layout_marginTop="30dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:id="@+id/event_chooseenddate"
+                android:text="@string/date"/>
 
 
-        <EditText
-            android:id="@+id/event_eventstartdate"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/event_eventendtime"
+                >
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/event_eventendtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/event_eventendtime"
+                android:inputType="datetime"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:id="@+id/event_chooseendtime"
+                android:text="@string/time"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/event_teamcheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/event_teamcheckbox"
+                android:layout_marginTop="30dp"
+                />
+            <CheckBox
+                android:id="@+id/event_gametypecheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/event_gametypecheckbox"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="20dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/event_reqdpeople"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/event_reqdpeople"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/event_reqdpeople"
+                    android:inputType="text"
+                    android:layout_marginTop="30dp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/event_teamsize"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/event_teamsize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/event_teamsize"
+                    android:inputType="text"
+                    android:layout_marginStart="20dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="30dp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/event_eventstartdate"
+            android:layout_marginTop="10dp"
+            android:hint="@string/event_prizemoney"
+            >
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/event_prizemoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/event_prizemoney"
             android:inputType="text"
-            android:layout_marginTop="30dp"/>
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:id="@+id/event_choosestartdate"
-            android:text="@string/date"/>
-
-
-        <EditText
-            android:id="@+id/event_eventstarttime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/event_eventstarttimme"
-            android:inputType="text"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:id="@+id/event_choosestarttime"
-            android:text="@string/time"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <EditText
-            android:id="@+id/event_eventenddate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/event_eventenddate"
-            android:inputType="text"
-            android:layout_marginTop="30dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:id="@+id/event_chooseenddate"
-            android:text="@string/date"/>
-
-
-
-        <EditText
-            android:id="@+id/event_eventendtime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/event_eventendtime"
-            android:inputType="datetime"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:id="@+id/event_chooseendtime"
-            android:text="@string/time"/>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/event_teamcheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/event_teamcheckbox"
-            android:layout_marginTop="30dp"
-            />
-        <CheckBox
-            android:id="@+id/event_gametypecheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/event_gametypecheckbox"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <EditText
-            android:id="@+id/event_reqdpeople"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/event_reqdpeople"
-            android:inputType="text"
-            android:layout_marginTop="30dp"
-            />
-
-        <EditText
-            android:id="@+id/event_teamsize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/event_teamsize"
-            android:inputType="text"
-            android:layout_marginStart="20dp"
             android:visibility="gone"
+            android:layout_marginTop="30dp"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/location"
+                >
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/event_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/location"
+                    android:inputType="text"
+                    android:layout_marginTop="30dp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:layout_marginTop="30dp"
+                android:id="@+id/event_location_button"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/event_addevent"
             android:layout_marginTop="30dp"
-            />
-
+            android:id="@+id/event_addevent"/>
     </LinearLayout>
-
-
-    <EditText
-        android:id="@+id/event_prizemoney"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/event_prizemoney"
-        android:inputType="text"
-        android:visibility="gone"
-        android:layout_marginTop="30dp"/>
-
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/event_addevent"
-        android:layout_marginTop="30dp"
-        android:id="@+id/event_addevent"/>
-</LinearLayout>
+</ScrollView>

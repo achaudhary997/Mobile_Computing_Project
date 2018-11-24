@@ -17,13 +17,15 @@ public class Event {
     private String eventName;
     private String startTime;
     private String endTime;
+    private String startDay;
+    private String endDay;
     private String teamEvent;
     private String requiredCount;
     private String teamSize;
-    private String gameType; //Friendly / Competition
+    private String gameType;
     private String prizeMoney;
     private String creator;
-    private Location location;
+    private EventLocation location;
 
 
     public Event() {
@@ -32,7 +34,7 @@ public class Event {
 
     public Event(String eventID, String eventName, String startTime, String endTime, String teamEvent,
                  String requiredCount, String teamSize, String gameType,
-                 String prizeMoney, String creator) {
+                 String prizeMoney, String creator, String startDay, String endDay, EventLocation location) {
         this.eventID = eventID;
         this.eventName = eventName;
         this.startTime = startTime;
@@ -43,11 +45,34 @@ public class Event {
         this.gameType = gameType;
         this.prizeMoney = prizeMoney;
         this.creator = creator;
-        //this.location = location;
+        this.startDay = startDay;
+        this.endDay = endDay;
+        this.location = location;
     }
 
     public String getEventID() {
         return eventID;
+    }
+
+    public String getStartDay() {
+        return startDay;
+    }
+
+    public String getEndDay() {
+        return endDay;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setStartDay(String startDay) {
+
+        this.startDay = startDay;
+    }
+
+    public void setEndDay(String endDay) {
+        this.endDay = endDay;
     }
 
     public String getEventName() {
@@ -98,7 +123,7 @@ public class Event {
         this.creator = creator;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(EventLocation location) {
         this.location = location;
     }
 
@@ -127,7 +152,7 @@ public class Event {
         return prizeMoney;
     }
 
-    public Location getLocation() {
+    public EventLocation getLocation() {
         return location;
     }
 
