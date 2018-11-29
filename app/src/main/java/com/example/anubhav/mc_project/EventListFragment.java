@@ -78,8 +78,13 @@ public class EventListFragment extends Fragment {
                     System.out.println("Reading message" + snap.getValue());
                     events.add(snap.getValue(Event.class));
                 }
-                eAdapter = new EventAdapter(events);
-                eventRecyclerView.setAdapter(eAdapter);
+                if (eAdapter == null) {
+                    eAdapter = new EventAdapter(events);
+                    eventRecyclerView.setAdapter(eAdapter);
+                } else {
+                    eAdapter.notifyDataSetChanged();
+                }
+
             }
 
             @Override
@@ -92,27 +97,29 @@ public class EventListFragment extends Fragment {
     
     private class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Event event;
-        private TextView eventName, eventStartTime, eventEndTime;
-        private Button showMap;
+        private TextView eventName;
+
 
         public EventHolder (LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.event_list_item_home_page, parent, false));
             eventName = itemView.findViewById(R.id.eventlist_event_name);
-            eventStartTime = itemView.findViewById(R.id.eventlist_start_time);
-            eventEndTime = itemView.findViewById(R.id.eventlist_end_time);
-            showMap = itemView.findViewById(R.id.eventlist_show_map);
+            itemView.setOnClickListener(this);
+
         }
 
         public void bind (Event event) {
             this.event = event;
             eventName.setText(event.getEventName());
-            eventStartTime.setText(event.getStartTime());
-            eventEndTime.setText(event.getEndTime());
+
         }
 
         @Override
         public void onClick(View view) {
-            // Create intent here and show new activity/fragment
+            Intent intent = new Intent(getActivity().getBaseContext(), EventDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("Event", this.event);
+            intent.putExtras(bundle);
+            getActivity().startActivity(intent);
         }
     }
 
@@ -133,16 +140,6 @@ public class EventListFragment extends Fragment {
         public void onBindViewHolder(EventHolder holder, int position) {
             final Event event = eventList.get(position);
             holder.bind(event);
-            holder.showMap.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String latAndLong = event.getLocation().getLatitude() + "," + event.getLocation().getLongitude();
-                    Uri address = Uri.parse("geo:"+latAndLong+"?q="+latAndLong+"(Event Location)");
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, address);
-                    mapIntent.setPackage("com.google.android.apps.maps");
-                    startActivity(mapIntent);
-                }
-            });
 
         }
 

@@ -86,6 +86,24 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
         return fragment;
     }
 
+    public boolean checkEmptyFields() {
+        if (eventName.getText().toString().equals("") || startDate.getText().toString().equals("") ||
+                startTime.getText().toString().equals("") || endDate.getText().toString().equals("") ||
+                endTime.getText().toString().equals("") || requiredNumber.getText().toString().equals("") ||
+                eventLocation.getText().toString().equals("")) {
+            return false;
+        }
+
+        if (gameType.isChecked() && (prizeMoney.getText().toString().equals(""))) {
+            return false;
+        }
+
+        if (teamOrIndi.isChecked() && teamSize.getText().toString().equals("")) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,12 +172,17 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
                 team = "Team";
             } else team = "Individual";
 
-            addEvent(eventName.getText().toString(), startTime.getText().toString(),
-                    endTime.getText().toString(), game,
-                    requiredNumber.getText().toString(), teamSize.getText().toString(),
-                    prizeMoney.getText().toString(), team, startDate.getText().toString(), endDate.getText().toString(),
-                    eventLocation.toString());
 
+
+            if (checkEmptyFields()) {
+                addEvent(eventName.getText().toString(), startTime.getText().toString(),
+                        endTime.getText().toString(), game,
+                        requiredNumber.getText().toString(), teamSize.getText().toString(),
+                        prizeMoney.getText().toString(), team, startDate.getText().toString(), endDate.getText().toString(),
+                        eventLocation.toString());
+            } else {
+                Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+            }
         } else if (v == chooseStartDateButton || v == chooseEndDateButton) {
             Log.d("Button:", "Inside Date");
             final Calendar c = Calendar.getInstance();

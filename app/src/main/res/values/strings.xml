@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">MC_Project</string>
+    <string name="app_name">Sports Buddy</string>
     <string name="title_activity_home_page">HomePage</string>
     <string name="title_activity_register">Register</string>
+    <string name="title_activity_event_details">Event Details</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -46,6 +47,7 @@
     <string name="time">Time</string>
     <string name="location">Location</string>
     <string name="show_map">Show Map</string>
+    <string name="join_event">Join Event</string>
 
 
     <!-- Interests -->

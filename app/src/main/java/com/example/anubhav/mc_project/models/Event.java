@@ -4,9 +4,10 @@ import android.location.Location;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Event {
+public class Event implements Serializable {
 
     public static final String DB_REF_NAME = "Events";
 

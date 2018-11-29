@@ -2,7 +2,9 @@ package com.example.anubhav.mc_project.models;
 
 import android.location.Location;
 
-public class EventLocation {
+import java.io.Serializable;
+
+public class EventLocation implements Serializable {
 
     public double latitude;
     public double longitude;

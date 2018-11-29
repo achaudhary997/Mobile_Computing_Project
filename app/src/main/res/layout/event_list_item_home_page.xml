@@ -11,7 +11,17 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="40dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:id="@+id/eventlist_event_name"
+                />
+
+            <!--
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,7 +51,7 @@
                 android:id="@+id/eventlist_show_map"
                 android:text="@string/show_map"
                 android:layout_marginTop="90dp"/>
-
+            -->
 
         </RelativeLayout>
 
