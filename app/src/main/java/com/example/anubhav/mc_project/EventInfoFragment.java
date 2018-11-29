@@ -1,15 +1,29 @@
 package com.example.anubhav.mc_project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.anubhav.mc_project.models.Chat;
 import com.example.anubhav.mc_project.models.Event;
+import com.example.anubhav.mc_project.models.Message;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class EventInfoFragment extends Fragment {
 
@@ -21,7 +35,21 @@ public class EventInfoFragment extends Fragment {
 
     private Bundle args;
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+
+    private String username;
+    private Chat sessionChat = new Chat();
+    private String selectedUserUID;
+
+    private boolean nodeFound = false;
+    private String foundNodeKey;
+
     private TextView eventName, eventCreator, eventType, eventPrize, eventRequired, eventTeamOrIndi;
+
+    private Button messageButton;
+
+    private ArrayList<Message> messages = sessionChat.getMessages();
 
 
     public EventInfoFragment() {
@@ -49,6 +77,7 @@ public class EventInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         View view = inflater.inflate(R.layout.fragment_event_info, container, false);
         eventName = view.findViewById(R.id.event_info_event_name);
         eventCreator = view.findViewById(R.id.event_info_event_creator);
@@ -56,6 +85,22 @@ public class EventInfoFragment extends Fragment {
         eventPrize = view.findViewById(R.id.event_info_event_prize_money);
         eventRequired = view.findViewById(R.id.event_info_event_required_members);
         eventTeamOrIndi = view.findViewById(R.id.event_info_event_team_or_indi);
+        messageButton = view.findViewById(R.id.event_info_message_creator);
+
+
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth = FirebaseAuth.getInstance();
+                mUser = mAuth.getCurrentUser();
+
+                final String creatorID = event.getCreator();
+
+                Intent messageIntent = new Intent(getActivity(), ChatActivity.class);
+                messageIntent.putExtra("event_creator_id", creatorID);
+                startActivity(messageIntent);
+            }
+        });
 
         String text = "Event Name: " + event.getEventName();
         eventName.setText(text);
@@ -89,6 +134,7 @@ public class EventInfoFragment extends Fragment {
         eventRequired.setText(text);
         return view;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
