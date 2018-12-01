@@ -100,9 +100,7 @@ public class ChatActivity extends AppCompatActivity {
             @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             final String formattedDate = df.format(c.getTime());
             final Message newMessage = new Message(messageText, mUser.getUid(), formattedDate);
-//            chatObject.add(new ChatMessage(messageText, mUser.getDisplayName(), username));
-//            messages.add(new Message(messageText, "Yashit", "kihsdkfjshfd"));
-//            adapter.notifyDataSetChanged();
+//            chatObject.add(new ChatMessage(messageText, f
             final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
             rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -110,10 +108,10 @@ public class ChatActivity extends AppCompatActivity {
                     if(nodeFound) {
                         sessionChat.addMessages(newMessage);
                         messages.clear();
-                        for(Message m : sessionChat.getMessages()) {
-                            messages.add(m);
-                            adapter.notifyDataSetChanged();
-                        }
+//                        for(Message m : sessionChat.getMessages()) {
+//                            messages.add(m);
+//                            adapter.notifyDataSetChanged();
+//                        }
                         messages.addAll(sessionChat.getMessages());
                         adapter.notifyDataSetChanged();
                         rootRef.child("chat").child(foundNodeKey).child("messages").setValue(sessionChat.getMessages());
