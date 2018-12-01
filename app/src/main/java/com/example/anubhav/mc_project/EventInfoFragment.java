@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -37,6 +40,8 @@ public class EventInfoFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
     private String username;
     private Chat sessionChat = new Chat();
@@ -47,7 +52,7 @@ public class EventInfoFragment extends Fragment {
 
     private TextView eventName, eventCreator, eventType, eventPrize, eventRequired, eventTeamOrIndi;
 
-    private Button messageButton;
+    private Button messageButton, joinButton;
 
     private ArrayList<Message> messages = sessionChat.getMessages();
 
@@ -86,7 +91,67 @@ public class EventInfoFragment extends Fragment {
         eventRequired = view.findViewById(R.id.event_info_event_required_members);
         eventTeamOrIndi = view.findViewById(R.id.event_info_event_team_or_indi);
         messageButton = view.findViewById(R.id.event_info_message_creator);
+        joinButton = view.findViewById(R.id.event_info_join_button);
 
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        selectedUserUID = mUser.getUid();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
+
+        if (event.getCreator().equals(selectedUserUID)) {
+            joinButton.setEnabled(false);
+            messageButton.setEnabled(false);
+        }
+
+        try {
+            Query query = mDatabaseReference.child(Helper.eventNode).child(event.getEventID()).child("Registered Users").child(selectedUserUID);
+
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        joinButton.setText("Leave Event");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        } catch(Exception e) {
+            Log.d("Error", "Error in Firebase query");
+        }
+
+
+
+        joinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String eventID = event.getEventID();
+
+                        mDatabaseReference.child(Helper.eventNode).child(eventID).child("Registered Users").child(selectedUserUID).setValue(true);
+                        Log.d("Firebase", "onDataChange");
+                        Toast.makeText(getActivity(), "Joined Event", Toast.LENGTH_SHORT).show();
+                        joinButton.setText("Leave Event");
+
+                        mDatabaseReference.child(Helper.eventNode).child(eventID).child("").child(selectedUserUID).setValue(true);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.d("Firebase", "onCancelled");
+                    }
+                });
+
+            }
+        });
 
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override

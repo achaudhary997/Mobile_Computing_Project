@@ -16,12 +16,22 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 
+import com.example.anubhav.mc_project.models.Event;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventDetailActivity extends AppCompatActivity {
 
     private Bundle args;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +111,13 @@ public class EventDetailActivity extends AppCompatActivity {
 
         adapter.addFrag(EventInfoFragment.newInstance(args), "Info");
         adapter.addFrag(EventLocationTimeFragment.newInstance(args), "Location/Timings");
+        Event event = (Event) args.getSerializable("Event");
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        String selectedUserUID = mUser.getUid();
+        if (event.getCreator().equals(selectedUserUID)) {
+            adapter.addFrag(EventEditFragment.newInstance(args), "Manage Event");
+        }
         viewPager.setAdapter(adapter);
     }
 

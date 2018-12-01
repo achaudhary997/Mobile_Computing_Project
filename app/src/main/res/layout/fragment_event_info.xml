@@ -82,7 +82,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="messageUser"
+
             android:text="@string/message_event_organizer"
             android:id="@+id/event_info_message_creator"/>
 

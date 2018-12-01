@@ -5,7 +5,9 @@ import android.location.Location;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Event implements Serializable {
 
@@ -27,11 +29,20 @@ public class Event implements Serializable {
     private String prizeMoney;
     private String creator;
     private EventLocation location;
+    private HashMap<String, Boolean> registeredUsers;
 
+    public HashMap<String, Boolean> getRegisteredUsers() {
+        return registeredUsers;
+    }
+
+    public void setRegisteredUsers(HashMap<String, Boolean> registeredUsers) {
+        this.registeredUsers = registeredUsers;
+    }
 
     public Event() {
 
     }
+
 
     public Event(String eventID, String eventName, String startTime, String endTime, String teamEvent,
                  String requiredCount, String teamSize, String gameType,
@@ -49,6 +60,8 @@ public class Event implements Serializable {
         this.startDay = startDay;
         this.endDay = endDay;
         this.location = location;
+        this.registeredUsers = new HashMap<>();
+
     }
 
     public String getEventID() {
