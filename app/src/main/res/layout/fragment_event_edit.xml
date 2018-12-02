@@ -229,12 +229,6 @@
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/location"
-            android:layout_marginTop="30dp"
-            android:id="@+id/event_edit_location_button"/>
 
         <Button
             android:layout_width="match_parent"

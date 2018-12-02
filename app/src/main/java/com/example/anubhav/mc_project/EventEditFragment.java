@@ -46,7 +46,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class EventEditFragment extends Fragment implements View.OnClickListener, LocationListener {
+public class EventEditFragment extends Fragment implements View.OnClickListener{
 
     private static final String ARG_PARAM = "Event";
 
@@ -63,7 +63,7 @@ public class EventEditFragment extends Fragment implements View.OnClickListener,
 
     private String selectedUserUID;
 
-    private Button addEventButton, chooseStartDateButton, chooseStartTimeButton, chooseEndTimeButton, chooseEndDateButton, chooseLocationButton;
+    private Button addEventButton, chooseStartDateButton, chooseStartTimeButton, chooseEndTimeButton, chooseEndDateButton;
     private EditText eventName, startTime, endTime, requiredNumber, teamSize, prizeMoney, startDate, endDate, eventLocation;
     private CheckBox teamOrIndi, gameType;
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -74,8 +74,7 @@ public class EventEditFragment extends Fragment implements View.OnClickListener,
     public boolean checkEmptyFields() {
         if (eventName.getText().toString().equals("") || startDate.getText().toString().equals("") ||
                 startTime.getText().toString().equals("") || endDate.getText().toString().equals("") ||
-                endTime.getText().toString().equals("") || requiredNumber.getText().toString().equals("") ||
-                eventLocation.getText().toString().equals("")) {
+                endTime.getText().toString().equals("") || requiredNumber.getText().toString().equals("")) {
             return false;
         }
 
@@ -141,7 +140,6 @@ public class EventEditFragment extends Fragment implements View.OnClickListener,
         chooseStartTimeButton = view.findViewById(R.id.event_edit_choosestarttime);
         chooseEndDateButton = view.findViewById(R.id.event_edit_chooseenddate);
         chooseEndTimeButton = view.findViewById(R.id.event_edit_chooseendtime);
-        chooseLocationButton = view.findViewById(R.id.event_edit_location_button);
 
         eventName.setText(event.getEventName());
         startDate.setText(event.getStartDay());
@@ -150,6 +148,7 @@ public class EventEditFragment extends Fragment implements View.OnClickListener,
         endTime.setText(event.getEndTime());
         requiredNumber.setText(event.getRequiredCount());
         eventLocation.setText(event.getLocation().toString());
+        eventLocation.setEnabled(false);
         if (event.getGameType().equals("Competition")) {
             gameType.setChecked(true);
             prizeMoney.setVisibility(View.VISIBLE);
@@ -170,7 +169,7 @@ public class EventEditFragment extends Fragment implements View.OnClickListener,
         chooseStartTimeButton.setOnClickListener(this);
         chooseEndDateButton.setOnClickListener(this);
         chooseEndTimeButton.setOnClickListener(this);
-        chooseLocationButton.setOnClickListener(this);
+
 
 
         return view;
@@ -249,62 +248,9 @@ public class EventEditFragment extends Fragment implements View.OnClickListener,
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();
-        } else if (v == chooseLocationButton) {
-            Log.d("Button:", "Inside location listener");
-            if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
-
-            }
-            getLocation();
         }
     }
 
-
-    /*
-     * Functions to get the current Location from the GPS provider
-     * AndroStock.com
-     */
-
-    private void getLocation() {
-        try {
-            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-        }
-        catch(SecurityException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        eventLocation.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
-        evLocation = new EventLocation(location);
-        System.out.println("Location:" + " " + location);
-        try {
-            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            eventLocation.setText(eventLocation.getText() + "\n"+addresses.get(0).getAddressLine(0)+", "+
-                    addresses.get(0).getAddressLine(1)+", "+addresses.get(0).getAddressLine(2));
-        } catch(Exception e) {
-
-        }
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(getActivity(), "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
 
     public void addEvent(final String eventName, final String startTime, final String endTime,
                          final String gameType, final String requiredNumber, final String teamSize,
@@ -319,7 +265,7 @@ public class EventEditFragment extends Fragment implements View.OnClickListener,
                         teamSize, gameType, prizeMoney, selectedUserUID, startDate, endDate, evLocation, event.getRegisteredUsers());
                 mDatabaseReference.child(Helper.eventNode).child(event.getEventID()).setValue(event);
                 Log.d("Firebase", "onDataChange");
-                Toast.makeText(getActivity(), "Event Created and published", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Event Modified and published", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
                 startActivity(intent);
 

@@ -255,6 +255,7 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
         evLocation = new EventLocation(location);
         System.out.println("Location:" + " " + location);
         Log.d("Button:", "Got location");
+        /*
         try {
             Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
@@ -262,7 +263,7 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
                     addresses.get(0).getAddressLine(1)+", "+addresses.get(0).getAddressLine(2));
         } catch(Exception e) {
             Log.d("Button:", "geocoder Error");
-        }
+        }*/
 
     }
 
@@ -311,6 +312,7 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
                 Event event = new Event(eventID, eventName, startTime, endTime, teamOrIndi, requiredNumber,
                         teamSize, gameType, prizeMoney, userID, startDate, endDate, evLocation);
                 mDatabaseReference.child(Helper.eventNode).child(eventID).setValue(event);
+                locationManager.removeUpdates(EventFragment.this);
                 Log.d("Firebase", "onDataChange");
                 Toast.makeText(getActivity(), "Event Created and published", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
