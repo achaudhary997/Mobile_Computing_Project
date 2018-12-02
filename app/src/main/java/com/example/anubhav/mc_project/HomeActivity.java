@@ -106,9 +106,10 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_my_events) {
             fragmentClass = EventFragment.class;
 
-        } else if (id == R.id.nav_explore) {
+        } //else if (id == R.id.nav_explore) {
 
-        } else if (id == R.id.nav_profile) {
+        //}
+        else if (id == R.id.nav_profile) {
             fragmentClass = ProfileFragment.class;
         } else if (id == R.id.nav_settings) {
 

@@ -166,6 +166,26 @@ public class Event implements Serializable {
         this.eventID = eventID;
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventID='" + eventID + '\'' +
+                ", eventName='" + eventName + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", startDay='" + startDay + '\'' +
+                ", endDay='" + endDay + '\'' +
+                ", teamEvent='" + teamEvent + '\'' +
+                ", requiredCount='" + requiredCount + '\'' +
+                ", teamSize='" + teamSize + '\'' +
+                ", gameType='" + gameType + '\'' +
+                ", prizeMoney='" + prizeMoney + '\'' +
+                ", creator='" + creator + '\'' +
+                ", location=" + location +
+                ", registeredUsers=" + registeredUsers +
+                '}';
+    }
+
     public String getTeamEvent() {
         return teamEvent;
     }

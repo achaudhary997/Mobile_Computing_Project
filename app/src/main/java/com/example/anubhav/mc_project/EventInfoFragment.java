@@ -136,12 +136,11 @@ public class EventInfoFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String eventID = event.getEventID();
 
-                        mDatabaseReference.child(Helper.eventNode).child(eventID).child("Registered Users").child(selectedUserUID).setValue(true);
+                        mDatabaseReference.child(Helper.eventNode).child(eventID).child("registeredUsers").child(selectedUserUID).setValue(true);
                         Log.d("Firebase", "onDataChange");
                         Toast.makeText(getActivity(), "Joined Event", Toast.LENGTH_SHORT).show();
                         joinButton.setText("Leave Event");
 
-                        mDatabaseReference.child(Helper.eventNode).child(eventID).child("").child(selectedUserUID).setValue(true);
                     }
 
                     @Override

@@ -83,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
         mDatabaseReference = mFirebaseDatabase.getReference();
         userID = user.getUid();
 
-        User userProfile = new User(userID, name, email, 0.0, contact);
+        User userProfile = new User(userID, name, email, 0.001, contact);
         ArrayList<String> interests = new ArrayList<>();
         interests.add(in1);
         interests.add(in2);

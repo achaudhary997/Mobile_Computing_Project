@@ -11,6 +11,7 @@ public class User {
     private double rating;
     private String phoneNumber;
     private ArrayList<String> interests;
+    private int eventsConducted;
     // private List<Events> // Uncomment and implement
 
     public User() {}
@@ -21,7 +22,18 @@ public class User {
         this.email = email;
         this.rating = rating;
         this.phoneNumber = phoneNumber;
+        this.eventsConducted = 0;
+
     }
+
+    public int getEventsConducted() {
+        return eventsConducted;
+    }
+
+    public void setEventsConducted(int eventsConducted) {
+        this.eventsConducted = eventsConducted;
+    }
+
 
     public String getUid() {
         return uid;

@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -48,7 +49,7 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
  * Fragment class to add events to Firebase
  */
 
-public class EventFragment extends Fragment implements View.OnClickListener, LocationListener {
+public class EventFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -241,7 +242,7 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
         try {
             Log.d("Button:", "Inside Get Location");
             locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsSensor);
         }
         catch(SecurityException e) {
             e.printStackTrace();
@@ -249,38 +250,34 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
         }
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        eventLocation.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
-        evLocation = new EventLocation(location);
-        System.out.println("Location:" + " " + location);
-        Log.d("Button:", "Got location");
-        /*
-        try {
-            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            eventLocation.setText(eventLocation.getText() + "\n"+addresses.get(0).getAddressLine(0)+", "+
-                    addresses.get(0).getAddressLine(1)+", "+addresses.get(0).getAddressLine(2));
-        } catch(Exception e) {
-            Log.d("Button:", "geocoder Error");
-        }*/
+    LocationListener gpsSensor = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            eventLocation.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
+            evLocation = new EventLocation(location);
+            System.out.println("Location:" + " " + location);
+            Log.d("Button:", "Got location");
 
-    }
+        }
 
-    @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(getActivity(), "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
-    }
+        @Override
+        public void onProviderDisabled(String provider) {
+            Toast.makeText(getActivity(), "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
+        }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
 
-    }
+        }
 
-    @Override
-    public void onProviderEnabled(String provider) {
+        @Override
+        public void onProviderEnabled(String provider) {
 
-    }
+        }
+    };
+
+
+
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -312,11 +309,9 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
                 Event event = new Event(eventID, eventName, startTime, endTime, teamOrIndi, requiredNumber,
                         teamSize, gameType, prizeMoney, userID, startDate, endDate, evLocation);
                 mDatabaseReference.child(Helper.eventNode).child(eventID).setValue(event);
-                locationManager.removeUpdates(EventFragment.this);
+                locationManager.removeUpdates(gpsSensor);
                 Log.d("Firebase", "onDataChange");
-                Toast.makeText(getActivity(), "Event Created and published", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), HomeActivity.class);
-                startActivity(intent);
+
 
             }
 
@@ -325,6 +320,10 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
                 Log.d("Firebase", "onCancelled");
             }
         });
+
+        Toast.makeText(getActivity(), "Event Created and published", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        startActivity(intent);
 
 
 
