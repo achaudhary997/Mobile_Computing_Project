@@ -64,6 +64,26 @@ public class Event implements Serializable {
 
     }
 
+    public void setAll(String eventID, String eventName, String startTime, String endTime, String teamEvent,
+                       String requiredCount, String teamSize, String gameType, String prizeMoney,
+                       String creator, String startDay, String endDay, EventLocation location,
+                       HashMap<String, Boolean> registeredUsers) {
+            this.eventID = eventID;
+            this.eventName = eventName;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.teamEvent = teamEvent;
+            this.requiredCount = requiredCount;
+            this.teamSize = teamSize;
+            this.gameType = gameType;
+            this.prizeMoney = prizeMoney;
+            this.creator = creator;
+            this.startDay = startDay;
+            this.endDay = endDay;
+            this.location = location;
+            this.registeredUsers = registeredUsers;
+    }
+
     public String getEventID() {
         return eventID;
     }

@@ -34,4 +34,10 @@ public class EventLocation implements Serializable {
 
         this.longitude = location.getLongitude();
     }
+
+    @Override
+    public String toString() {
+        return  "Latitude: " + latitude +
+                "  Longitude: " + longitude;
+    }
 }

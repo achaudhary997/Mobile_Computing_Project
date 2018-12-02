@@ -155,12 +155,14 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
                 teamSize.setVisibility(View.VISIBLE);
             } else {
                 teamSize.setVisibility(View.GONE);
+                teamSize.setText("None");
             }
         } else if (v == gameType) {
             if (gameType.isChecked()) {
                 prizeMoney.setVisibility(View.VISIBLE);
             } else {
                 prizeMoney.setVisibility(View.GONE);
+                prizeMoney.setText("0");
             }
         } else if (v == addEventButton) {
 
@@ -237,11 +239,13 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
 
     private void getLocation() {
         try {
+            Log.d("Button:", "Inside Get Location");
             locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
         catch(SecurityException e) {
             e.printStackTrace();
+            Log.d("Button:", "Error");
         }
     }
 
@@ -250,13 +254,14 @@ public class EventFragment extends Fragment implements View.OnClickListener, Loc
         eventLocation.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
         evLocation = new EventLocation(location);
         System.out.println("Location:" + " " + location);
+        Log.d("Button:", "Got location");
         try {
             Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             eventLocation.setText(eventLocation.getText() + "\n"+addresses.get(0).getAddressLine(0)+", "+
                     addresses.get(0).getAddressLine(1)+", "+addresses.get(0).getAddressLine(2));
         } catch(Exception e) {
-
+            Log.d("Button:", "geocoder Error");
         }
 
     }

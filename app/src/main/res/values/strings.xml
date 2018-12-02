@@ -43,6 +43,7 @@
     <string name="event_prizemoney">Prize Money</string>
     <string name="event_addevent">Add Event</string>
     <string name="event_teamsize">Team Size</string>
+    <string name="modify_event">Modify Event</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="location">Location</string>
