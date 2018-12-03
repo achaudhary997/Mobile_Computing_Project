@@ -34,6 +34,7 @@ public class Helper {
 
     public static String userNode = "users";
     public static String eventNode = "events";
+    public static String chatNode = "chat";
     public static String logTag = "sports_buddy_log";
 
 

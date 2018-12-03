@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -123,6 +124,9 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
             fragmentClass = SettingsFragment.class;
             Log.d("Settings has been clicked", "onNavigationItemSelected: ");
+        } else if (id == R.id.nav_messages) {
+            Intent messagesIntent = new Intent(HomeActivity.this, AllMessages.class);
+            startActivity(messagesIntent);
         } else if (id == R.id.nav_my_teams) {
 
         } else if (id == R.id.nav_logout) {
