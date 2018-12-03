@@ -121,7 +121,8 @@ public class HomeActivity extends AppCompatActivity
         else if (id == R.id.nav_profile) {
             fragmentClass = ProfileFragment.class;
         } else if (id == R.id.nav_settings) {
-
+            fragmentClass = SettingsFragment.class;
+            Log.d("Settings has been clicked", "onNavigationItemSelected: ");
         } else if (id == R.id.nav_my_teams) {
 
         } else if (id == R.id.nav_logout) {

@@ -12,6 +12,15 @@ public class User {
     private String phoneNumber;
     private ArrayList<String> interests;
     private int eventsConducted;
+    private int distanceThreshold;
+
+    public int getDistanceThreshold() {
+        return distanceThreshold;
+    }
+
+    public void setDistanceThreshold(int distanceThreshold) {
+        this.distanceThreshold = distanceThreshold;
+    }
     // private List<Events> // Uncomment and implement
 
     public User() {}

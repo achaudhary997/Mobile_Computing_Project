@@ -69,10 +69,12 @@ public class ProfileFragment extends Fragment {
         TextView fullName = view.findViewById(R.id.profile_full_name);
         TextView email = view.findViewById(R.id.profile_email);
         TextView contact = view.findViewById(R.id.profile_phone_number);
+        TextView distance = view.findViewById(R.id.profile_distance_threshold);
 
         fullName.setText(currentUser.getFullName());
         email.setText(currentUser.getEmail());
         contact.setText(currentUser.getPhoneNumber());
+        distance.setText(""+currentUser.getDistanceThreshold());
     }
 
     @Override

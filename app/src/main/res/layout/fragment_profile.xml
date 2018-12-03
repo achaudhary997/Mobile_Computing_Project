@@ -36,6 +36,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_email"
         android:id="@+id/profile_phone_number" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_phone_number"
+        android:id="@+id/profile_distance_threshold"/>
 
 
 </RelativeLayout>
