@@ -55,6 +55,8 @@ public class EventListFragment extends Fragment  implements SwipeRefreshLayout.O
 
     public ProgressDialog progressBar;
 
+    HashMap<String, ArrayList<String>> userInterestMap = new HashMap<>();
+
     public double curLatitude = 0.0;
     public double curLongitude = 0.0;
     
@@ -109,8 +111,15 @@ public class EventListFragment extends Fragment  implements SwipeRefreshLayout.O
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snap: dataSnapshot.child(Helper.eventNode).getChildren()) {
                     Log.d("Reading message", "onDataChange: ");
-                    System.out.println("Reading message" + snap.getValue());
-                    events.add(snap.getValue(Event.class));
+//                    System.out.println("Reading message" + snap.getValue());
+                    Event event = snap.getValue(Event.class);
+                    events.add(event);
+                    ArrayList<String> interests = (ArrayList<String>) dataSnapshot.child(Helper.userNode).child(event.getCreator()).child("interests").getValue();
+                    userInterestMap.put(event.getCreator(), interests);
+                }
+                if (!userInterestMap.containsKey(userID)) {
+                    ArrayList<String> interests = (ArrayList<String>) dataSnapshot.child(Helper.userNode).child(userID).child("interests").getValue();
+                    userInterestMap.put(userID, interests);
                 }
                 //if (eAdapter == null) {
                 eAdapter = new EventAdapter(events);
@@ -409,7 +418,37 @@ public class EventListFragment extends Fragment  implements SwipeRefreshLayout.O
 
         @Override
         public int compare(Event a, Event b) {
-            if (a.getCreatorRating() < b.getCreatorRating()) {
+            String userA = a.getCreator();
+            String userB = b.getCreator();
+
+            double ratingWeight = 0.5;
+            double interestsWeight = 0.5;
+
+            int aInterestCount = 0;
+            int bInterestCount = 0;
+
+            if (userInterestMap.containsKey(userA) && userInterestMap.containsKey(userB) && userInterestMap.containsKey(userID)) {
+                ArrayList<String> currentUserInterests = userInterestMap.get(userID);
+                ArrayList<String> AUserInterests = userInterestMap.get(userA);
+                ArrayList<String> BUserInterests = userInterestMap.get(userB);
+
+                for (String interest : AUserInterests) {
+                    if (currentUserInterests.contains(interest)) {
+                        aInterestCount += 1;
+                    }
+                }
+
+                for (String interest : BUserInterests) {
+                    if (currentUserInterests.contains(interest)) {
+                        bInterestCount += 1;
+                    }
+                }
+            }
+
+            double aWeight = ratingWeight*a.getCreatorRating() + interestsWeight*aInterestCount;
+            double bWeight = ratingWeight*b.getCreatorRating() + interestsWeight*bInterestCount;
+
+            if (aWeight < bWeight) {
                 return 1;
             } else {
                 return -1;
