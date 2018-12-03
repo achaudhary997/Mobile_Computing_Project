@@ -1,58 +1,45 @@
 package com.example.anubhav.mc_project;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AlertDialogLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.anubhav.mc_project.models.Event;
-import com.example.anubhav.mc_project.models.EventLocation;
-import com.google.android.gms.maps.MapView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
+
 import java.util.Map;
 
 public class EventListFragment extends Fragment {
-    public final int distance_threshold = 3; //in km
+    public final int distance_threshold = 5; //in km
 
     private RecyclerView eventRecyclerView;
     private EventAdapter eAdapter;
@@ -63,9 +50,10 @@ public class EventListFragment extends Fragment {
     private DatabaseReference mDatabaseReference;
     private String userID;
 
-    public ProgressBar progressBar;
+    public ProgressDialog progressBar;
 
-
+    public double curLatitude = 0.0;
+    public double curLongitude = 0.0;
     
     public EventListFragment() {
         
@@ -81,12 +69,23 @@ public class EventListFragment extends Fragment {
         View view = inflater.inflate(R.layout.content_home_page, container, false);
         eventRecyclerView = view.findViewById(R.id.home_page_recycler_view);
         eventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        progressBar = view.findViewById(R.id.event_load_progressbar);
-        progressBar.setMax(100);
+
+        progressBar = new ProgressDialog(getActivity());
+        progressBar.setMessage("Getting the best events for you...");
+        progressBar.show();
+        Intent intent = new Intent(getActivity().getBaseContext(), LocationActivity.class);
+        startActivityForResult(intent, 1);
         updateUI();
 
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        curLatitude = data.getDoubleExtra("Latitude", 0.0);
+        curLongitude = data.getDoubleExtra("Longitude", 0.0);
+        Log.d("Received coordinates:", Double.toString(curLatitude) + " "  + Double.toString(curLongitude));
     }
 
     private void updateUI() {
@@ -105,7 +104,6 @@ public class EventListFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snap: dataSnapshot.child(Helper.eventNode).getChildren()) {
                     Log.d("Reading message", "onDataChange: ");
-                    //GenericTypeIndicator<Event> t = new GenericTypeIndicator<Event>(){};
                     System.out.println("Reading message" + snap.getValue());
                     events.add(snap.getValue(Event.class));
                 }
@@ -129,11 +127,13 @@ public class EventListFragment extends Fragment {
     private class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Event event;
         private TextView eventName;
-
+        FirebaseUser user = mAuth.getCurrentUser();
+        String uid = user.getUid();
 
         public EventHolder (LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.event_list_item_home_page, parent, false));
             eventName = itemView.findViewById(R.id.eventlist_event_name);
+
             itemView.setOnClickListener(this);
 
         }
@@ -141,6 +141,10 @@ public class EventListFragment extends Fragment {
         public void bind (Event event) {
             this.event = event;
             eventName.setText(event.getEventName());
+            if (event.getCreator().equals(uid)) {
+                RelativeLayout layout = itemView.findViewById(R.id.list_item_rel_layout);
+                layout.setBackgroundColor(Color.parseColor("#6C2323"));
+            }
 
         }
 
@@ -162,8 +166,7 @@ public class EventListFragment extends Fragment {
         }
 
         public EventAdapter(ArrayList<Event> events) {
-            //progressBar.setVisibility(View.VISIBLE);
-            progressBar.setProgress(0);
+
             new SetupEventsDisplay().execute(events);
 
         }
@@ -195,17 +198,18 @@ public class EventListFragment extends Fragment {
     private class SetupEventsDisplay extends AsyncTask<ArrayList<Event>, Integer, ArrayList<Event>> {
 
         private ArrayList<Event> eventList = new ArrayList<>();
-        private double curLatitude=0.0, curLongitude=0.0;
-        private GPSlocation gps;
+        //private double curLatitude = 0.0, curLongitude = 0.0;
+
         HashMap<String, Boolean> users;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            gps = new GPSlocation();
-            gps.getLocation();
-            //curLatitude = gps.getLatitude();
-            //curLongitude = gps.getLongitude();
+            // Get gps data
+            //((Activity)getContext()).startActivityForResult(new Intent(, LocationActivity.class));
+
         }
+
 
         @Override
         protected void onPostExecute(ArrayList<Event> events) {
@@ -214,7 +218,7 @@ public class EventListFragment extends Fragment {
             Date curDate = new Date();
             Date eventDate;
             String dateString = formatter.format(curDate);
-            Boolean isAttending = false, eventCompleted = false;
+
             //final int userEventsConducted = 0;
 
             try {
@@ -224,8 +228,8 @@ public class EventListFragment extends Fragment {
             }
 
 
-
             for (final Event event : events) {
+                Boolean isAttending = false, eventCompleted = false;
                 Log.d("event:", event.toString());
                 double eventLatitude = event.getLocation().getLatitude();
                 double eventLongitude = event.getLocation().getLongitude();
@@ -242,7 +246,7 @@ public class EventListFragment extends Fragment {
                     Log.d("users, ", users.toString());
                     Iterator it = users.entrySet().iterator();
                     while (it.hasNext()) {
-                        Map.Entry pair = (Map.Entry)it.next();
+                        Map.Entry pair = (Map.Entry) it.next();
                         Log.d("key in hashmap", pair.getKey().toString());
                         if (userID.equals(pair.getKey().toString())) {
                             // User is attending this event. Have to define comparator for sorting based on distance, attending and rating
@@ -256,7 +260,7 @@ public class EventListFragment extends Fragment {
 
                 eventDate = new Date();
                 try {
-                    eventDate = formatter.parse(event.getEndDay() + " "  + event.getEndTime());
+                    eventDate = formatter.parse(event.getEndDay() + " " + event.getEndTime());
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -284,11 +288,12 @@ public class EventListFragment extends Fragment {
                                         mDatabaseReference.child(Helper.userNode).child(event.getCreator()).addListenerForSingleValueEvent(new ValueEventListener() {
                                             long userEventsConducted = 0;
                                             double userCurrentRating = 0, new_rating = 0;
+
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 if (dataSnapshot.exists()) {
-                                                    userEventsConducted = (Long)dataSnapshot.child("eventsConducted").getValue();
-                                                    userCurrentRating = (Double)dataSnapshot.child("rating").getValue();
+                                                    userEventsConducted = (Long) dataSnapshot.child("eventsConducted").getValue();
+                                                    userCurrentRating = (Double) dataSnapshot.child("rating").getValue();
                                                 }
                                                 userEventsConducted++;
                                                 new_rating = (userCurrentRating + rating.getRating()) / userEventsConducted;
@@ -336,25 +341,27 @@ public class EventListFragment extends Fragment {
             }
 
             Log.d("onPostExecute ", "done");
-            progressBar.setVisibility(View.GONE);
+
+            Collections.sort(eventList, new SortEvents());
             eAdapter.setEventList(this.eventList);
-
             eventRecyclerView.setAdapter(eAdapter);
-
+            progressBar.dismiss();
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            progressBar.setProgress(values[0]);
+
         }
 
         @Override
         protected ArrayList<Event> doInBackground(ArrayList<Event>... events) {
-            while (this.curLatitude == 0.0) {
-                publishProgress(0);
+
+
+            while (curLatitude == 0.0) {
+                //    publishProgress(0);
             }
-            publishProgress(100);
+
             return events[0];
         }
 
@@ -379,60 +386,18 @@ public class EventListFragment extends Fragment {
         private double rad2deg(double rad) {
             return (rad * 180.0 / Math.PI);
         }
-
-        class GPSlocation{
-            LocationManager locationManager;
-            double latitude, longitude;
-            public void getLocation() {
-                try {
-                    locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsSensor);
-                }
-                catch(SecurityException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            public double getLatitude() {
-                return latitude;
-            }
-
-            public double getLongitude() {
-                return longitude;
-            }
-
-            LocationListener gpsSensor = new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-                    latitude = location.getLatitude();
-                    longitude = location.getLongitude();
-                    curLatitude = latitude;
-                    curLongitude = longitude;
-                    locationManager.removeUpdates(gpsSensor);
-                }
-
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-                    Toast.makeText(getActivity(), "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
-                }
-            };
-
-        }
-
-
     }
 
+    class SortEvents implements Comparator<Event> {
 
-
+        @Override
+        public int compare(Event a, Event b) {
+            if (a.getCreatorRating() < b.getCreatorRating()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    }
 
 }

@@ -32,7 +32,8 @@
             android:name=".EventDetailActivity"
             android:label="@string/title_activity_event_details"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".LocationActivity"></activity>
     </application>
 
 </manifest>

@@ -262,7 +262,7 @@ public class EventEditFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 event.setAll(event.getEventID(), eventName, startTime, endTime, teamOrIndi, requiredNumber,
-                        teamSize, gameType, prizeMoney, selectedUserUID, startDate, endDate, event.getLocation(), event.getRegisteredUsers());
+                        teamSize, gameType, prizeMoney, selectedUserUID, startDate, endDate, event.getLocation(), event.getRegisteredUsers(), event.getCreatorRating());
                 mDatabaseReference.child(Helper.eventNode).child(event.getEventID()).setValue(event);
                 Log.d("Firebase", "onDataChange");
                 Toast.makeText(getActivity(), "Event Modified and published", Toast.LENGTH_SHORT).show();

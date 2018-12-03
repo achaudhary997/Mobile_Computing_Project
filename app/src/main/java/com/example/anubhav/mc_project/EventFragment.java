@@ -1,5 +1,7 @@
 package com.example.anubhav.mc_project;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -70,7 +72,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     private DatabaseReference mDatabaseReference;
     private String userID;
 
-
+    public double curLatitude = 0.0, curLongitude = 0.0;
     LocationManager locationManager;
     EventLocation evLocation;
 
@@ -224,10 +226,6 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             timePickerDialog.show();
         } else if (v == chooseLocationButton) {
             Log.d("Button:", "Inside location listener");
-            if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
-
-            }
             getLocation();
         }
     }
@@ -239,44 +237,20 @@ public class EventFragment extends Fragment implements View.OnClickListener {
      */
 
     private void getLocation() {
-        try {
-            Log.d("Button:", "Inside Get Location");
-            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsSensor);
-        }
-        catch(SecurityException e) {
-            e.printStackTrace();
-            Log.d("Button:", "Error");
-        }
+        Intent intent = new Intent(getActivity().getBaseContext(), LocationActivity.class);
+        startActivityForResult(intent, 1);
     }
 
-    LocationListener gpsSensor = new LocationListener() {
-        @Override
-        public void onLocationChanged(Location location) {
-            eventLocation.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
-            evLocation = new EventLocation(location);
-            System.out.println("Location:" + " " + location);
-            Log.d("Button:", "Got location");
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            Toast.makeText(getActivity(), "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-    };
-
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        curLatitude = data.getDoubleExtra("Latitude", 0.0);
+        curLongitude = data.getDoubleExtra("Longitude", 0.0);
+        Log.d("Received coordinates:", Double.toString(curLatitude) + " "  + Double.toString(curLongitude));
+        EventLocation evLocation = new EventLocation();
+        evLocation.setLatitude(curLatitude);
+        evLocation.setLongitude(curLongitude);
+        eventLocation.setText("Latitude: " + Double.toString(curLatitude) + " Longitude: " + Double.toString(curLongitude));
+    }
 
 
     public void onButtonPressed(Uri uri) {
@@ -305,13 +279,16 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                double creatorRating = (double)dataSnapshot.child(Helper.userNode).child(userID).child("rating").getValue();
                 String eventID = Long.toString(dataSnapshot.child(Helper.eventNode).getChildrenCount() + 1);
                 Event event = new Event(eventID, eventName, startTime, endTime, teamOrIndi, requiredNumber,
-                        teamSize, gameType, prizeMoney, userID, startDate, endDate, evLocation);
+                        teamSize, gameType, prizeMoney, userID, startDate, endDate, evLocation, creatorRating);
                 mDatabaseReference.child(Helper.eventNode).child(eventID).setValue(event);
-                locationManager.removeUpdates(gpsSensor);
-                Log.d("Firebase", "onDataChange");
 
+                Log.d("Firebase", "onDataChange");
+                Toast.makeText(getActivity(), "Event Created and published", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                startActivity(intent);
 
             }
 
@@ -321,9 +298,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        Toast.makeText(getActivity(), "Event Created and published", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getActivity(), HomeActivity.class);
-        startActivity(intent);
+
 
 
 

@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="40dp"
-            android:background="@color/blue_grey">
+            android:background="@color/blue_grey"
+            android:id="@+id/list_item_rel_layout">
 
 
             <TextView

@@ -35,6 +35,7 @@ public class Helper {
     public static String userNode = "users";
     public static String eventNode = "events";
     public static String logTag = "sports_buddy_log";
+    public static double currentLatitudeGlobal = 0.0, currentLongitudeGlobal = 0.0;
 
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);

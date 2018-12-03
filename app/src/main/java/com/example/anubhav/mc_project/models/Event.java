@@ -2,10 +2,14 @@ package com.example.anubhav.mc_project.models;
 
 import android.location.Location;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -30,6 +34,8 @@ public class Event implements Serializable {
     private String creator;
     private EventLocation location;
     private HashMap<String, Boolean> registeredUsers;
+    private double creatorRating;
+
 
     public HashMap<String, Boolean> getRegisteredUsers() {
         return registeredUsers;
@@ -46,7 +52,7 @@ public class Event implements Serializable {
 
     public Event(String eventID, String eventName, String startTime, String endTime, String teamEvent,
                  String requiredCount, String teamSize, String gameType,
-                 String prizeMoney, String creator, String startDay, String endDay, EventLocation location) {
+                 String prizeMoney, String creator, String startDay, String endDay, EventLocation location, double creatorRating) {
         this.eventID = eventID;
         this.eventName = eventName;
         this.startTime = startTime;
@@ -61,13 +67,13 @@ public class Event implements Serializable {
         this.endDay = endDay;
         this.location = location;
         this.registeredUsers = new HashMap<>();
-
+        this.creatorRating = creatorRating;
     }
 
     public void setAll(String eventID, String eventName, String startTime, String endTime, String teamEvent,
                        String requiredCount, String teamSize, String gameType, String prizeMoney,
                        String creator, String startDay, String endDay, EventLocation location,
-                       HashMap<String, Boolean> registeredUsers) {
+                       HashMap<String, Boolean> registeredUsers, double creatorRating) {
             this.eventID = eventID;
             this.eventName = eventName;
             this.startTime = startTime;
@@ -82,6 +88,7 @@ public class Event implements Serializable {
             this.endDay = endDay;
             this.location = location;
             this.registeredUsers = registeredUsers;
+            this.creatorRating = creatorRating;
     }
 
     public String getEventID() {
@@ -115,6 +122,14 @@ public class Event implements Serializable {
 
     public String getStartTime() {
         return startTime;
+    }
+
+    public double getCreatorRating() {
+        return creatorRating;
+    }
+
+    public void setCreatorRating(double creatorRating) {
+        this.creatorRating = creatorRating;
     }
 
     public String getEndTime() {
@@ -183,6 +198,7 @@ public class Event implements Serializable {
                 ", creator='" + creator + '\'' +
                 ", location=" + location +
                 ", registeredUsers=" + registeredUsers +
+                ", creatorRating=" + creatorRating +
                 '}';
     }
 
@@ -210,4 +226,6 @@ public class Event implements Serializable {
         return location;
     }
 
+
 }
+
