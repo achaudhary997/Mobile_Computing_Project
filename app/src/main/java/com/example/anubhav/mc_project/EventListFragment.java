@@ -40,7 +40,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class EventListFragment extends Fragment  implements SwipeRefreshLayout.OnRefreshListener {
-    public final int distance_threshold = 5; //in km
+    public static int distance_threshold ; //in km
 
     private RecyclerView eventRecyclerView;
     private EventAdapter eAdapter;
@@ -116,6 +116,8 @@ public class EventListFragment extends Fragment  implements SwipeRefreshLayout.O
                     events.add(event);
                     ArrayList<String> interests = (ArrayList<String>) dataSnapshot.child(Helper.userNode).child(event.getCreator()).child("interests").getValue();
                     userInterestMap.put(event.getCreator(), interests);
+                    distance_threshold = Integer.parseInt(""+dataSnapshot.child(Helper.userNode).child(userID).child("distanceThreshold").getValue());
+
                 }
                 if (!userInterestMap.containsKey(userID)) {
                     ArrayList<String> interests = (ArrayList<String>) dataSnapshot.child(Helper.userNode).child(userID).child("interests").getValue();
