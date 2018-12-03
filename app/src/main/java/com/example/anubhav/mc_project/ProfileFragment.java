@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,15 +68,25 @@ public class ProfileFragment extends Fragment {
     }
 
     public void displayData(View view) {
-        TextView fullName = view.findViewById(R.id.profile_full_name);
-        TextView email = view.findViewById(R.id.profile_email);
-        TextView contact = view.findViewById(R.id.profile_phone_number);
-        TextView distance = view.findViewById(R.id.profile_distance_threshold);
+//        TextView fullName = view.findViewById(R.id.profile_full_name);
+//        TextView email = view.findViewById(R.id.profile_email);
+//        TextView contact = view.findViewById(R.id.profile_phone_number);
+//        TextView distance = view.findViewById(R.id.profile_distance_threshold);
+//
+//        fullName.setText(   "Name           : "+currentUser.getFullName());
+//        email.setText(      "Email Id       : "+currentUser.getEmail());
+//        contact.setText(    "Phone          : "+currentUser.getPhoneNumber());
+//        distance.setText(   "Max Distance   : "+currentUser.getDistanceThreshold());
 
-        fullName.setText(currentUser.getFullName());
-        email.setText(currentUser.getEmail());
-        contact.setText(currentUser.getPhoneNumber());
-        distance.setText(""+currentUser.getDistanceThreshold());
+        ListView list = view.findViewById(R.id.profileList);
+        String[] profiledata = {
+                "Name         : " + currentUser.getFullName(),
+                "Email ID     : " + currentUser.getEmail(),
+                "Phone Number : " + currentUser.getPhoneNumber(),
+                "Max Distance : " + currentUser.getDistanceThreshold()
+        };
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, profiledata);
+        list.setAdapter(arrayAdapter);
     }
 
     @Override
