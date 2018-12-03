@@ -121,4 +121,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
     }
+
+    public void showLogin(View view) {
+        // Emulating back button press as of now because the only way user can reach this screen is via login.
+        onBackPressed();
+    }
 }

@@ -49,6 +49,7 @@ public class EventListFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabaseReference;
     private String userID;
+    private boolean refreshUI = false;
 
     public ProgressDialog progressBar;
 
@@ -69,6 +70,7 @@ public class EventListFragment extends Fragment {
         View view = inflater.inflate(R.layout.content_home_page, container, false);
         eventRecyclerView = view.findViewById(R.id.home_page_recycler_view);
         eventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
         progressBar = new ProgressDialog(getActivity());
         progressBar.setMessage("Getting the best events for you...");
@@ -123,7 +125,7 @@ public class EventListFragment extends Fragment {
         });
 
     }
-    
+
     private class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Event event;
         private TextView eventName;
@@ -399,5 +401,7 @@ public class EventListFragment extends Fragment {
             }
         }
     }
+
+
 
 }
