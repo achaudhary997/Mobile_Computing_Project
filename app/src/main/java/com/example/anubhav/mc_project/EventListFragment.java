@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,11 +39,12 @@ import java.util.Iterator;
 
 import java.util.Map;
 
-public class EventListFragment extends Fragment {
+public class EventListFragment extends Fragment  implements SwipeRefreshLayout.OnRefreshListener {
     public final int distance_threshold = 5; //in km
 
     private RecyclerView eventRecyclerView;
     private EventAdapter eAdapter;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
@@ -71,13 +73,14 @@ public class EventListFragment extends Fragment {
         eventRecyclerView = view.findViewById(R.id.home_page_recycler_view);
         eventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
 
-        progressBar = new ProgressDialog(getActivity());
-        progressBar.setMessage("Getting the best events for you...");
-        progressBar.show();
-        Intent intent = new Intent(getActivity().getBaseContext(), LocationActivity.class);
-        startActivityForResult(intent, 1);
-        updateUI();
+        onRefresh();
 
 
         return view;
@@ -124,6 +127,17 @@ public class EventListFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        progressBar = new ProgressDialog(getActivity());
+        progressBar.setMessage("Getting the best events for you...");
+        progressBar.show();
+        Intent intent = new Intent(getActivity().getBaseContext(), LocationActivity.class);
+        startActivityForResult(intent, 1);
+        updateUI();
     }
 
     private class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -347,6 +361,7 @@ public class EventListFragment extends Fragment {
             Collections.sort(eventList, new SortEvents());
             eAdapter.setEventList(this.eventList);
             eventRecyclerView.setAdapter(eAdapter);
+            mSwipeRefreshLayout.setRefreshing(false);
             progressBar.dismiss();
         }
 
