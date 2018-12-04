@@ -29,10 +29,6 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/settings" />
             <item
-                android:id="@+id/nav_my_teams"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/my_teams" />
-            <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/logout" />

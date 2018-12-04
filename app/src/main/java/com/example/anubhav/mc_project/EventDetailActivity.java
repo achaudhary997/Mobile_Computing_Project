@@ -99,13 +99,13 @@ public class EventDetailActivity extends AppCompatActivity {
         });
 
     }
-
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_home_page_drawer, menu);
         return true;
     }
-
+    */
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 

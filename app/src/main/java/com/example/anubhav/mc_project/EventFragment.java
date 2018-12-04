@@ -246,7 +246,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         curLatitude = data.getDoubleExtra("Latitude", 0.0);
         curLongitude = data.getDoubleExtra("Longitude", 0.0);
         Log.d("Received coordinates:", Double.toString(curLatitude) + " "  + Double.toString(curLongitude));
-        EventLocation evLocation = new EventLocation();
+        evLocation = new EventLocation();
         evLocation.setLatitude(curLatitude);
         evLocation.setLongitude(curLongitude);
         eventLocation.setText("Latitude: " + Double.toString(curLatitude) + " Longitude: " + Double.toString(curLongitude));

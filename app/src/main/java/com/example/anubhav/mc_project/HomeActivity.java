@@ -64,6 +64,8 @@ public class HomeActivity extends AppCompatActivity
         transaction.replace(R.id.flContent, fragment);
         transaction.commit();
 
+
+
     }
 
     @Override
@@ -84,13 +86,14 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home_page, menu);
         return true;
     }
-
+    */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -116,10 +119,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_my_events) {
             fragmentClass = EventFragment.class;
 
-        } //else if (id == R.id.nav_explore) {
-
-        //}
-        else if (id == R.id.nav_profile) {
+        } else if (id == R.id.nav_profile) {
             fragmentClass = ProfileFragment.class;
         } else if (id == R.id.nav_settings) {
             fragmentClass = SettingsFragment.class;
@@ -127,9 +127,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_messages) {
             Intent messagesIntent = new Intent(HomeActivity.this, AllMessages.class);
             startActivity(messagesIntent);
-        } else if (id == R.id.nav_my_teams) {
-
-        } else if (id == R.id.nav_logout) {
+        }else if (id == R.id.nav_logout) {
             AuthUI.getInstance()
                     .signOut(this)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
